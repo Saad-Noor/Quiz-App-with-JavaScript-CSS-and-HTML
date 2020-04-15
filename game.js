@@ -1,10 +1,10 @@
 const question = document.getElementById("question");
 const choices = Array.from( document.getElementsByClassName("choice-text"));
 
-let currentQ ={};
-let acceptingAns=false;
-let score=0;
-let questionCounter=0;
+let currentQ = {};
+let acceptingAns= false;
+let score= 0;
+let questionCounter= 0;
 let availQuestions= [];
 
 let questions = [
@@ -49,6 +49,9 @@ startGame =() =>{
 
 };
 getNewQs = ()=>{
+    if (availQuestions.length == 0 ||questionCounter >= MAX_QUESTIONS ){
+        return window.location.assign("/end.html");
+    }
     questionCounter++;
     const questionIndex = Math.floor(Math.random()* availQuestions.length);
     currentQ= availQuestions[questionIndex];
@@ -61,5 +64,18 @@ getNewQs = ()=>{
     availQuestions.splice(questionIndex,1);
     acceptingAns=true;
 };
+
+choices.forEach( choice=>{
+    choice.addEventListener('click', e=> {
+        
+        if(!acceptingAns) return;
+
+        acceptingAns= false;
+        const selectedchoice= e.target;
+        const selectedAns= selectedchoice.dataset ["number"];
+        console.log(selectedAns);
+        getNewQs();
+    });
+});
 startGame();
 
