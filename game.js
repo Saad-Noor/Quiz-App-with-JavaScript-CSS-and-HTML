@@ -1,8 +1,8 @@
 const question = document.getElementById("question");
 const choices = Array.from( document.getElementsByClassName("choice-text"));
-const questionCount = document.getElementById('qCounter');
+const progress = document.getElementById('progress');
 const scoretText = document.getElementById('score');
-
+const progressBarFull = document.getElementById('progressBarFull');
 let currentQ = {};
 let acceptingAns= false;
 let score= 0;
@@ -55,12 +55,13 @@ getNewQs = ()=>{
         return window.location.assign("/end.html");
     }
     questionCounter++;
-    questionCount.innerText= questionCounter+ "/" +MAX_QUESTIONS ;
+    progress.innerText= "Question" +questionCounter+ "/" +MAX_QUESTIONS ;
+
     const questionIndex = Math.floor(Math.random()* availQuestions.length);
     currentQ= availQuestions[questionIndex];
     question.innerText= currentQ.question;
-
-    choices.forEach(choice =>{
+    progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
+    choices.forEach(choice => {
         const number = choice.dataset['number'];
         choice.innerText= currentQ["choice"+ number];
     });
@@ -68,8 +69,8 @@ getNewQs = ()=>{
     acceptingAns=true;
 };
 
-choices.forEach( choice=>{
-    choice.addEventListener('click', e=> {
+    choices.forEach( choice=>{
+        choice.addEventListener('click', e=> {
         
         if(!acceptingAns) return;
 
