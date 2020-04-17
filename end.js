@@ -11,7 +11,7 @@ username.addEventListener('keyup', ()=> {
     saveScoreBtn.disabled = !username.value;
 });
 
-saveHighScore = e => {
+saveHighScore = (e) => {
     console.log('Clicked');
     e.preventDefault();
 
